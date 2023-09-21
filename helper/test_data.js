@@ -1,17 +1,22 @@
 const { faker } = require('@faker-js/faker');
 
-export let generatedData;
 
-export function generateData() {
-    generatedData = {
-        fields: {
-            assignee: {id: "61269ac0db2b4e006a1f69ec"},
-            issuetype: {id: "10012"},
-            labels: ["1234", "abcdf"],
-            project: {id: "10002"},
-            reporter: {id: "61269ac0db2b4e006a1f69ec"},
-            summary: faker.word.noun()
-        },
-        "update": {}
+export class GeneratedData {
+    constructor() {
+        this.generatedData = {
+            fields: {
+                assignee: { id: faker.helpers.arrayElement(["61269ac0db2b4e006a1f69ec", "61f4116158ce4f0068ae099d"]) },
+                issuetype: { id: faker.helpers.arrayElement(["10012", "10009", "10014"]) },
+                labels: [faker.helpers.arrayElement(["1234", "abcdf"])],
+                project: { id: "10002" },
+                reporter: { id: faker.helpers.arrayElement(["61269ac0db2b4e006a1f69ec", "61f4116158ce4f0068ae099d"]) },
+                summary: faker.word.noun()
+            },
+            "update": {}
+        }
+    }
+
+    get getGeneratedData() {
+        return this.generatedData;
     }
 }
