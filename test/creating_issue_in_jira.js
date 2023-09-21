@@ -1,5 +1,5 @@
 import { GeneratedData } from "../helper/test_data";
-import { createIssueWithParameters, deleteIssue, receiveInfoAboutIssue } from "../methods/crud_methods";
+import { createIssueWithParameters, deleteIssueAsCleanUp, receiveInfoAboutIssue } from "../methods/crud_methods";
 import { TOKEN } from "../config/supertest";
 import { checkThatReceivedIssueDataIsCorrect } from "../methods/asserts";
 
@@ -8,21 +8,21 @@ describe('Given: logged user When: creates an issue Then: the issue is saved and
     let testData;
 
     before('generate test data for the test', async () => {
-        let generator = await new GeneratedData();
-        testData = await generator.getGeneratedData;
+        let generator = new GeneratedData();
+        testData = generator.getGeneratedValidData;
     })
 
-    it('POST /issue', async () => {
+    it('send POST to /issue to create issue with {id} and send GET to /issue/{id} to check created issue', async () => {
         let createdIssueData = await createIssueWithParameters(testData, TOKEN);
 
         idOfCreatedIssue = createdIssueData.body.id;
 
         let receivedIssueData = await receiveInfoAboutIssue(idOfCreatedIssue, TOKEN);
 
-        await checkThatReceivedIssueDataIsCorrect(receivedIssueData, testData, idOfCreatedIssue)
+        checkThatReceivedIssueDataIsCorrect(receivedIssueData, testData, idOfCreatedIssue)
     })
 
     after('clean-up: deleting created issue', async () => {
-        await deleteIssue(idOfCreatedIssue, TOKEN)
+        await deleteIssueAsCleanUp(idOfCreatedIssue, TOKEN)
     });
 })

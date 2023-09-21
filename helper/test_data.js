@@ -3,7 +3,7 @@ const { faker } = require('@faker-js/faker');
 
 export class GeneratedData {
     constructor() {
-        this.generatedData = {
+        this.generatedValidData = {
             fields: {
                 assignee: { id: faker.helpers.arrayElement(["61269ac0db2b4e006a1f69ec", "61f4116158ce4f0068ae099d"]) },
                 issuetype: { id: faker.helpers.arrayElement(["10012", "10009", "10014"]) },
@@ -16,7 +16,7 @@ export class GeneratedData {
         }
     }
 
-    get getGeneratedData() {
-        return this.generatedData;
+    get getGeneratedValidData() {
+        return this.generatedValidData;
     }
 }
